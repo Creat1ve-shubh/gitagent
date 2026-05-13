@@ -729,6 +729,105 @@ OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318 gitclaw -p "test"
 
 Contributions are welcome! Please see [CONTRIBUTING.md](./CONTRIBUTING.md) for guidelines.
 
+## ❓ FAQ
+
+### General
+
+**What is Gitclaw?**
+Gitclaw (formerly GitAgent) is a git-native AI agent framework where the agent IS a git repository. Identity, rules, memory, tools, and skills are all version-controlled files, enabling "agents as repos" paradigm.
+
+**How does Gitclaw differ from other agent frameworks?**
+Unlike frameworks that scatter configuration across application code, Gitclaw makes the agent itself a git repo:
+- Fork an agent → inherit personality, rules, tools
+- Branch → create alternate personality versions
+- `git log` → see agent's memory evolution
+- Diff → track rule changes over time
+
+**What is the "agents as repos" concept?**
+Your agent lives in a git repository with structured files:
+- `agent.yaml` — model, tools, runtime config
+- `SOUL.md` — personality and identity
+- `RULES.md` — behavioral constraints
+- `memory/` — git-committed memory with full history
+- `tools/` — declarative YAML tool definitions
+- `skills/` — composable skill modules
+- `hooks/` — lifecycle hooks
+
+### Installation & Setup
+
+**What are the requirements?**
+Node.js 18+ (or 20+ recommended), npm, and git. Install globally with `npm install -g gitclaw`.
+
+**How do I set up API keys?**
+Run the installer for guided setup:
+```bash
+bash <(curl -fsSL "https://raw.githubusercontent.com/open-gitagent/gitagent/main/install.sh")
+```
+Or set manually:
+```bash
+export OPENAI_API_KEY="sk-..."
+```
+
+**Which LLM providers are supported?**
+- OpenAI (GPT-4o, GPT-4o-mini, etc.)
+- Anthropic (Claude models via native SDK)
+- Any OpenAI-compatible provider
+
+Use `--model` flag to override: `gitclaw --model anthropic:claude-sonnet-4-5-20250929`
+
+### Core Concepts
+
+**What is the SDK and how do I use it?**
+The SDK provides programmatic access via `query()` function that streams agent events:
+```typescript
+import { query } from "gitclaw";
+for await (const msg of query({ prompt: "hello", model: "openai:gpt-4o-mini" })) {
+  if (msg.type === "delta") process.stdout.write(msg.content);
+}
+```
+
+**How do local repo mode sessions work?**
+Clone a GitHub repo, run an agent on it, auto-commit to a session branch:
+```bash
+gitclaw --repo https://github.com/org/repo --pat ghp_xxx "Fix the bug"
+```
+Resume with: `gitclaw --repo URL --session gitclaw/session-xxx "Continue"`
+
+**What hooks are available?**
+Hooks are lifecycle scripts or programmatic handlers in `hooks/` directory. They trigger on agent events like tool execution, session start/end, or memory updates.
+
+### Development
+
+**How do I create custom tools?**
+Define tools in `tools/` directory using declarative YAML format. Each tool specifies name, description, parameters, and execution logic.
+
+**How do I add skills?**
+Create skill modules in `skills/` directory. Skills are composable and can be imported from installed packages or defined locally.
+
+**What telemetry options are available?**
+OpenTelemetry integration for observability:
+- Set `OTEL_EXPORTER_OTLP_ENDPOINT` for auto-enable
+- Use `OTEL_TRACES_EXPORTER=console` for local debugging
+- Jaeger quickstart with Docker
+
+### Troubleshooting
+
+**Why is my agent not responding?**
+- Check API key is set (`OPENAI_API_KEY` or equivalent)
+- Verify network connectivity to LLM provider
+- Use `--verbose` flag for detailed logs
+- Check `agent.yaml` model configuration
+
+**How do I debug agent behavior?**
+- Use console exporter: `OTEL_TRACES_EXPORTER=console gitclaw -p "test"`
+- Check spans in Jaeger: `docker run -p 16686:16686 -p 4318:4318 jaegertracing/all-in-one`
+- Inspect `memory/` directory for agent state
+
+**Where can I get help?**
+- GitHub Issues: https://github.com/open-gitagent/gitagent/issues
+- Examples: See README SDK section and CLI options
+- Contributing: See CONTRIBUTING.md for guidelines
+
 ## License
 
 This project is licensed under the [MIT License](./LICENSE).
