@@ -23,13 +23,13 @@ type HookDefinition struct {
 // Config holds all hooks loaded from hooks/hooks.yaml.
 type Config struct {
 	Hooks struct {
-		OnSessionStart []HookDefinition `yaml:"on_session_start,omitempty"`
-		PreToolUse     []HookDefinition `yaml:"pre_tool_use,omitempty"`
+		OnSessionStart  []HookDefinition `yaml:"on_session_start,omitempty"`
+		PreToolUse      []HookDefinition `yaml:"pre_tool_use,omitempty"`
 		PostToolFailure []HookDefinition `yaml:"post_tool_failure,omitempty"`
-		PostResponse   []HookDefinition `yaml:"post_response,omitempty"`
-		PreQuery       []HookDefinition `yaml:"pre_query,omitempty"`
-		FileChanged    []HookDefinition `yaml:"file_changed,omitempty"`
-		OnError        []HookDefinition `yaml:"on_error,omitempty"`
+		PostResponse    []HookDefinition `yaml:"post_response,omitempty"`
+		PreQuery        []HookDefinition `yaml:"pre_query,omitempty"`
+		FileChanged     []HookDefinition `yaml:"file_changed,omitempty"`
+		OnError         []HookDefinition `yaml:"on_error,omitempty"`
 	} `yaml:"hooks"`
 }
 

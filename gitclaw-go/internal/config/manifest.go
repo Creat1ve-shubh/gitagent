@@ -14,21 +14,21 @@ import (
 
 // Manifest represents the parsed agent.yaml file.
 type Manifest struct {
-	SpecVersion  string             `yaml:"spec_version"`
-	Name         string             `yaml:"name"`
-	Version      string             `yaml:"version"`
-	Description  string             `yaml:"description"`
-	Model        ModelConfig        `yaml:"model"`
-	Tools        []string           `yaml:"tools"`
-	Skills       []string           `yaml:"skills,omitempty"`
-	Runtime      RuntimeConfig      `yaml:"runtime"`
-	Extends      string             `yaml:"extends,omitempty"`
-	Dependencies []DependencyConfig `yaml:"dependencies,omitempty"`
+	SpecVersion  string                    `yaml:"spec_version"`
+	Name         string                    `yaml:"name"`
+	Version      string                    `yaml:"version"`
+	Description  string                    `yaml:"description"`
+	Model        ModelConfig               `yaml:"model"`
+	Tools        []string                  `yaml:"tools"`
+	Skills       []string                  `yaml:"skills,omitempty"`
+	Runtime      RuntimeConfig             `yaml:"runtime"`
+	Extends      string                    `yaml:"extends,omitempty"`
+	Dependencies []DependencyConfig        `yaml:"dependencies,omitempty"`
 	Agents       map[string]SubAgentConfig `yaml:"agents,omitempty"`
-	Delegation   DelegationConfig   `yaml:"delegation,omitempty"`
-	Plugins      map[string]PluginConfig `yaml:"plugins,omitempty"`
-	Compliance   *ComplianceConfig  `yaml:"compliance,omitempty"`
-	Serve        *ServeConfig       `yaml:"serve,omitempty"`
+	Delegation   DelegationConfig          `yaml:"delegation,omitempty"`
+	Plugins      map[string]PluginConfig   `yaml:"plugins,omitempty"`
+	Compliance   *ComplianceConfig         `yaml:"compliance,omitempty"`
+	Serve        *ServeConfig              `yaml:"serve,omitempty"`
 }
 
 // ModelConfig holds LLM model settings.
@@ -49,8 +49,8 @@ type ModelConstraints struct {
 
 // RuntimeConfig holds execution limits and the guard pipeline configuration.
 type RuntimeConfig struct {
-	MaxTurns int          `yaml:"max_turns"`
-	Timeout  int          `yaml:"timeout,omitempty"` // seconds per tool call
+	MaxTurns int           `yaml:"max_turns"`
+	Timeout  int           `yaml:"timeout,omitempty"` // seconds per tool call
 	Guard    *guard.Config `yaml:"guard,omitempty"`
 }
 
@@ -81,12 +81,12 @@ type PluginConfig struct {
 
 // ComplianceConfig for enterprise compliance settings.
 type ComplianceConfig struct {
-	RiskLevel           string   `yaml:"risk_level,omitempty"`
-	HumanInTheLoop      bool     `yaml:"human_in_the_loop,omitempty"`
-	DataClassification  string   `yaml:"data_classification,omitempty"`
-	RegulatoryFrameworks []string `yaml:"regulatory_frameworks,omitempty"`
-	Recordkeeping       *RecordkeepingConfig `yaml:"recordkeeping,omitempty"`
-	Review              *ReviewConfig        `yaml:"review,omitempty"`
+	RiskLevel            string               `yaml:"risk_level,omitempty"`
+	HumanInTheLoop       bool                 `yaml:"human_in_the_loop,omitempty"`
+	DataClassification   string               `yaml:"data_classification,omitempty"`
+	RegulatoryFrameworks []string             `yaml:"regulatory_frameworks,omitempty"`
+	Recordkeeping        *RecordkeepingConfig `yaml:"recordkeeping,omitempty"`
+	Review               *ReviewConfig        `yaml:"review,omitempty"`
 }
 
 // RecordkeepingConfig for audit logging settings.

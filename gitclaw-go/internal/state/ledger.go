@@ -52,14 +52,14 @@ const (
 // WriteIntent represents a single file mutation tracked by the ledger.
 type WriteIntent struct {
 	ID        string
-	Path      string       // normalized absolute path
+	Path      string // normalized absolute path
 	Operation OpType
 	Content   []byte
-	ToolCall  string       // originating tool call ID
+	ToolCall  string // originating tool call ID
 	SessionID string
 	Status    IntentStatus
 	CreatedAt time.Time
-	Version   uint64       // monotonic MVCC version
+	Version   uint64 // monotonic MVCC version
 
 	// done is closed when the intent transitions to Committed or Failed.
 	done chan struct{}
@@ -74,7 +74,7 @@ type Ledger struct {
 	version atomic.Uint64
 
 	// pathLocks serializes writes per path. Each path gets its own mutex.
-	pathMu   sync.Mutex
+	pathMu    sync.Mutex
 	pathLocks map[string]*sync.Mutex
 
 	// commitCh feeds the async git commit goroutine.

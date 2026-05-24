@@ -28,15 +28,15 @@ const (
 
 // Event is emitted during the agent loop for subscribers.
 type Event struct {
-	Type      EventType
-	Delta     string         // for EventDelta
-	ToolName  string         // for EventToolStart/EventToolEnd/EventGuardBlock
-	ToolArgs  map[string]any // for EventToolStart
-	ToolResult string        // for EventToolEnd
-	IsError   bool           // for EventToolEnd
-	Error     error          // for EventError
-	Reason    string         // for EventGuardBlock
-	Message   *AssistantMessage // for EventMessageEnd
+	Type       EventType
+	Delta      string            // for EventDelta
+	ToolName   string            // for EventToolStart/EventToolEnd/EventGuardBlock
+	ToolArgs   map[string]any    // for EventToolStart
+	ToolResult string            // for EventToolEnd
+	IsError    bool              // for EventToolEnd
+	Error      error             // for EventError
+	Reason     string            // for EventGuardBlock
+	Message    *AssistantMessage // for EventMessageEnd
 }
 
 // AssistantMessage represents a complete LLM response.

@@ -5,10 +5,10 @@ import "time"
 // Config holds the full guard pipeline configuration,
 // typically parsed from the `runtime.guard` section of agent.yaml.
 type Config struct {
-	RateLimit      *RateLimiterConfig      `yaml:"rate_limit,omitempty" json:"rate_limit,omitempty"`
-	CircuitBreaker *CircuitBreakerConfig   `yaml:"circuit_breaker,omitempty" json:"circuit_breaker,omitempty"`
-	CostCeiling    *CostGuardConfig        `yaml:"cost_ceiling,omitempty" json:"cost_ceiling,omitempty"`
-	Policies       []PolicyRule            `yaml:"policies,omitempty" json:"policies,omitempty"`
+	RateLimit      *RateLimiterConfig    `yaml:"rate_limit,omitempty" json:"rate_limit,omitempty"`
+	CircuitBreaker *CircuitBreakerConfig `yaml:"circuit_breaker,omitempty" json:"circuit_breaker,omitempty"`
+	CostCeiling    *CostGuardConfig      `yaml:"cost_ceiling,omitempty" json:"cost_ceiling,omitempty"`
+	Policies       []PolicyRule          `yaml:"policies,omitempty" json:"policies,omitempty"`
 }
 
 // DefaultConfig returns a sensible default guard configuration.

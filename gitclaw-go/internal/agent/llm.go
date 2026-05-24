@@ -51,10 +51,10 @@ func NewLLMClient(modelStr string) (*LLMClient, error) {
 
 // ChatMessage is a message in the conversation.
 type ChatMessage struct {
-	Role       string     `json:"role"`
-	Content    any        `json:"content"` // string or []ContentBlock
+	Role       string        `json:"role"`
+	Content    any           `json:"content"` // string or []ContentBlock
 	ToolCalls  []LLMToolCall `json:"tool_calls,omitempty"`
-	ToolCallID string     `json:"tool_call_id,omitempty"`
+	ToolCallID string        `json:"tool_call_id,omitempty"`
 }
 
 // LLMToolCall is a tool call from the LLM response.
@@ -85,20 +85,20 @@ type LLMFunctionDef struct {
 
 // ChatRequest is the request body for /chat/completions.
 type ChatRequest struct {
-	Model       string       `json:"model"`
+	Model       string        `json:"model"`
 	Messages    []ChatMessage `json:"messages"`
 	Tools       []LLMToolDef  `json:"tools,omitempty"`
-	Temperature *float64     `json:"temperature,omitempty"`
-	MaxTokens   *int         `json:"max_tokens,omitempty"`
-	TopP        *float64     `json:"top_p,omitempty"`
+	Temperature *float64      `json:"temperature,omitempty"`
+	MaxTokens   *int          `json:"max_tokens,omitempty"`
+	TopP        *float64      `json:"top_p,omitempty"`
 }
 
 // ChatResponse is the response from /chat/completions.
 type ChatResponse struct {
-	ID      string         `json:"id"`
-	Choices []ChatChoice   `json:"choices"`
-	Usage   *ChatUsage     `json:"usage,omitempty"`
-	Model   string         `json:"model"`
+	ID      string       `json:"id"`
+	Choices []ChatChoice `json:"choices"`
+	Usage   *ChatUsage   `json:"usage,omitempty"`
+	Model   string       `json:"model"`
 }
 
 // ChatChoice is one choice from the response.

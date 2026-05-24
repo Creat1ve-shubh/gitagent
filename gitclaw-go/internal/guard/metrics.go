@@ -12,14 +12,14 @@ type Metrics struct {
 	rejected atomic.Int64
 
 	// Per-guard rejection counts
-	mu              sync.RWMutex
+	mu                sync.RWMutex
 	rejectionsByGuard map[string]*atomic.Int64
 }
 
 // MetricsSnapshot is a point-in-time copy of guard metrics.
 type MetricsSnapshot struct {
-	TotalAllowed    int64            `json:"total_allowed"`
-	TotalRejected   int64            `json:"total_rejected"`
+	TotalAllowed      int64            `json:"total_allowed"`
+	TotalRejected     int64            `json:"total_rejected"`
 	RejectionsByGuard map[string]int64 `json:"rejections_by_guard"`
 }
 

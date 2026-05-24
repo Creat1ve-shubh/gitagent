@@ -13,10 +13,10 @@ import (
 
 // ToolConfig holds configuration shared by all built-in tools.
 type ToolConfig struct {
-	AgentDir   string
-	Timeout    int // seconds
-	Ledger     *state.Ledger
-	SessionID  string
+	AgentDir  string
+	Timeout   int // seconds
+	Ledger    *state.Ledger
+	SessionID string
 }
 
 // CreateBuiltinTools returns all built-in tools wired with the given config.

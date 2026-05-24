@@ -3,10 +3,9 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/npm/v/gitclaw?style=flat-square&color=blue" alt="npm version" />
-  <img src="https://img.shields.io/badge/node-%3E%3D20-brightgreen?style=flat-square" alt="node version" />
+  <img src="https://img.shields.io/badge/Go-1.22-brightgreen?style=flat-square" alt="go version" />
   <img src="https://img.shields.io/github/license/open-gitagent/gitclaw?style=flat-square" alt="license" />
-  <img src="https://img.shields.io/badge/TypeScript-5.7-blue?style=flat-square&logo=typescript&logoColor=white" alt="typescript" />
+  <img src="https://img.shields.io/badge/Runtime-Go-blue?style=flat-square&logo=go&logoColor=white" alt="go runtime" />
 </p>
 
 <h1 align="center">Gitclaw</h1>
@@ -52,16 +51,14 @@ bash <(curl -fsSL "https://raw.githubusercontent.com/open-gitagent/gitagent/main
 ```
 
 This will:
-- Install gitclaw globally via npm
-- Walk you through API key setup (Quick or Advanced mode)
-- Launch the voice UI in your browser at `http://localhost:3333`
+- Build the Go CLI binary and place it in `~/.local/bin/gitclaw`
 
-> **Requirements:** Node.js 18+, npm, git
+> **Requirements:** Go 1.22+, git
 
 ### Or install manually:
 
 ```bash
-npm install -g gitclaw
+go build -o ~/.local/bin/gitclaw ./cmd/gitclaw
 ```
 
 ## Quick Start
@@ -70,189 +67,66 @@ npm install -g gitclaw
 
 ```bash
 export OPENAI_API_KEY="sk-..."
-gitclaw --dir ~/my-project "Explain this project and suggest improvements"
+gitclaw run --dir ~/my-project --prompt "Explain this project and suggest improvements"
 ```
 
 That's it. Gitclaw auto-scaffolds everything on first run — `agent.yaml`, `SOUL.md`, `memory/` — and drops you into the agent.
 
-### Local Repo Mode
+### Guard Policy
 
-Clone a GitHub repo, run an agent on it, auto-commit and push to a session branch:
-
-```bash
-gitclaw --repo https://github.com/org/repo --pat ghp_xxx "Fix the login bug"
-```
-
-Resume an existing session:
-
-```bash
-gitclaw --repo https://github.com/org/repo --pat ghp_xxx --session gitclaw/session-a1b2c3d4 "Continue"
-```
-
-Token can come from env instead of `--pat`:
-
-```bash
-export GITHUB_TOKEN=ghp_xxx
-gitclaw --repo https://github.com/org/repo "Add unit tests"
-```
+Each agent can ship its own allowlist policy at `agents/<name>/guard.json`. The Go runtime enforces this policy before any tool call.
 
 ### CLI Options
 
-| Flag | Short | Description |
-|---|---|---|
-| `--dir <path>` | `-d` | Agent directory (default: cwd) |
-| `--repo <url>` | `-r` | GitHub repo URL to clone and work on |
-| `--pat <token>` | | GitHub PAT (or set `GITHUB_TOKEN` / `GIT_TOKEN`) |
-| `--session <branch>` | | Resume an existing session branch |
-| `--model <provider:model>` | `-m` | Override model (e.g. `anthropic:claude-sonnet-4-5-20250929`) |
-| `--sandbox` | `-s` | Run in sandbox VM |
-| `--prompt <text>` | `-p` | Single-shot prompt (skip REPL) |
-| `--env <name>` | `-e` | Environment config |
+| Command | Description |
+|---|---|
+| `gitclaw run --dir <path> --prompt <text> [--model provider:model]` | Run an agent prompt |
+| `gitclaw diff --dir <path> [--json]` | Semantic diff of agent changes |
+| `gitclaw bench --file bench.yaml --a <dir> [--b <dir>] [--json]` | Benchmark agent behavior |
 
-### SDK
+### SDK (Go)
 
 ```bash
-npm install gitclaw
+go get github.com/open-gitagent/gitagent/sdk
 ```
 
-```typescript
-import { query } from "gitclaw";
+```go
+package main
 
-// Simple query
-for await (const msg of query({
-  prompt: "List all TypeScript files and summarize them",
-  dir: "./my-agent",
-  model: "openai:gpt-4o-mini",
-})) {
-  if (msg.type === "delta") process.stdout.write(msg.content);
-  if (msg.type === "assistant") console.log("\n\nDone.");
-}
+import (
+  "fmt"
+  "github.com/open-gitagent/gitagent/sdk"
+)
 
-// Local repo mode via SDK
-for await (const msg of query({
-  prompt: "Fix the login bug",
-  model: "openai:gpt-4o-mini",
-  repo: {
-    url: "https://github.com/org/repo",
-    token: process.env.GITHUB_TOKEN!,
-  },
-})) {
-  if (msg.type === "delta") process.stdout.write(msg.content);
+func main() {
+  out, err := sdk.Run(sdk.RunOptions{Dir: ".", Prompt: "Summarize this repo", MaxTurns: 10})
+  if err != nil {
+    panic(err)
+  }
+  fmt.Println(out)
 }
 ```
 
 ## SDK
 
-The SDK provides a programmatic interface to Gitclaw agents. It mirrors the [Claude Agent SDK](https://github.com/anthropics/claude-code-sdk) pattern but runs **in-process** — no subprocesses, no IPC.
+The Go SDK exposes `Run`, `SemanticDiff`, and `RunBench` for embedding the runtime.
 
-### `query(options): Query`
+```go
+package main
 
-Returns an `AsyncGenerator<GCMessage>` that streams agent events.
+import (
+  "fmt"
+  "github.com/open-gitagent/gitagent/sdk"
+)
 
-```typescript
-import { query } from "gitclaw";
-
-for await (const msg of query({
-  prompt: "Refactor the auth module",
-  dir: "/path/to/agent",
-  model: "anthropic:claude-sonnet-4-5-20250929",
-})) {
-  switch (msg.type) {
-    case "delta":       // streaming text chunk
-      process.stdout.write(msg.content);
-      break;
-    case "assistant":   // complete response
-      console.log(`\nTokens: ${msg.usage?.totalTokens}`);
-      break;
-    case "tool_use":    // tool invocation
-      console.log(`Tool: ${msg.toolName}(${JSON.stringify(msg.args)})`);
-      break;
-    case "tool_result": // tool output
-      console.log(`Result: ${msg.content}`);
-      break;
-    case "system":      // lifecycle events & errors
-      console.log(`[${msg.subtype}] ${msg.content}`);
-      break;
+func main() {
+  result, err := sdk.SemanticDiff(".")
+  if err != nil {
+    panic(err)
   }
+  fmt.Println(result.Human())
 }
 ```
-
-### `tool(name, description, schema, handler): GCToolDefinition`
-
-Define custom tools the agent can call:
-
-```typescript
-import { query, tool } from "gitclaw";
-
-const search = tool(
-  "search_docs",
-  "Search the documentation",
-  {
-    properties: {
-      query: { type: "string", description: "Search query" },
-      limit: { type: "number", description: "Max results" },
-    },
-    required: ["query"],
-  },
-  async (args) => {
-    const results = await mySearchEngine(args.query, args.limit ?? 10);
-    return { text: JSON.stringify(results), details: { count: results.length } };
-  },
-);
-
-for await (const msg of query({
-  prompt: "Find docs about authentication",
-  tools: [search],
-})) {
-  // agent can now call search_docs
-}
-```
-
-### Hooks
-
-Programmatic lifecycle hooks for gating, logging, and control:
-
-```typescript
-for await (const msg of query({
-  prompt: "Deploy the service",
-  hooks: {
-    preToolUse: async (ctx) => {
-      // Block dangerous operations
-      if (ctx.toolName === "cli" && ctx.args.command?.includes("rm -rf"))
-        return { action: "block", reason: "Destructive command blocked" };
-
-      // Modify arguments
-      if (ctx.toolName === "write" && !ctx.args.path.startsWith("/safe/"))
-        return { action: "modify", args: { ...ctx.args, path: `/safe/${ctx.args.path}` } };
-
-      return { action: "allow" };
-    },
-    onError: async (ctx) => {
-      console.error(`Agent error: ${ctx.error}`);
-    },
-  },
-})) {
-  // ...
-}
-```
-
-### QueryOptions Reference
-
-| Option | Type | Description |
-|---|---|---|
-| `prompt` | `string \| AsyncIterable` | User prompt or multi-turn stream |
-| `dir` | `string` | Agent directory (default: `cwd`) |
-| `model` | `string` | `"provider:model-id"` |
-| `env` | `string` | Environment config (`config/<env>.yaml`) |
-| `systemPrompt` | `string` | Override discovered system prompt |
-| `systemPromptSuffix` | `string` | Append to discovered system prompt |
-| `tools` | `GCToolDefinition[]` | Additional tools |
-| `replaceBuiltinTools` | `boolean` | Skip cli/read/write/memory |
-| `allowedTools` | `string[]` | Tool name allowlist |
-| `disallowedTools` | `string[]` | Tool name denylist |
-| `repo` | `LocalRepoOptions` | Clone a GitHub repo and work on a session branch |
-| `sandbox` | `SandboxOptions \| boolean` | Run in sandbox VM (mutually exclusive with `repo`) |
-| `hooks` | `GCHooks` | Programmatic lifecycle hooks |
 | `maxTurns` | `number` | Max agent turns |
 | `abortController` | `AbortController` | Cancellation signal |
 | `constraints` | `object` | `temperature`, `maxTokens`, `topP`, `topK` |
