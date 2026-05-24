@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: #09090b;
+  --color-surface: rgba(255, 255, 255, 0.05);
+  --color-primary: #00add8;
+  --color-accent: #7928ca;
+}
+
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  :root {
+    --background: #09090b;
+    --foreground: #ffffff;
+  }
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
+}
+
+.hero-glow {
+  background: conic-gradient(from 180deg at 50% 50%, #00add855 0deg, #7928ca55 180deg, #00add855 360deg);
+  filter: blur(100px);
+}
