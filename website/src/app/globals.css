@@ -1,29 +1,82 @@
 @import "tailwindcss";
 
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&family=Russo+One&display=swap');
+
 @theme {
-  --color-background: #09090b;
-  --color-surface: rgba(255, 255, 255, 0.05);
-  --color-primary: #00add8;
-  --color-accent: #7928ca;
+  --color-background: #050505;
+  --color-surface: rgba(20, 20, 20, 0.8);
+  --color-primary: #ff2a2a;
+  --color-accent: #00ff41;
+  --color-blueprint: rgba(0, 255, 65, 0.05);
 }
 
 @custom-variant dark (&:is(.dark *));
 
 @layer base {
   :root {
-    --background: #09090b;
-    --foreground: #ffffff;
+    --background: #050505;
+    --foreground: #e0e0e0;
   }
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Chakra Petch', sans-serif;
   overflow-x: hidden;
+  background-image: 
+    linear-gradient(var(--color-blueprint) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-blueprint) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
-.hero-glow {
-  background: conic-gradient(from 180deg at 50% 50%, #00add855 0deg, #7928ca55 180deg, #00add855 360deg);
-  filter: blur(100px);
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Russo One', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.noise-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 50;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+.brutal-border {
+  border: 2px solid #333;
+  box-shadow: 4px 4px 0px 0px rgba(255, 42, 42, 0.3);
+  transition: all 0.2s ease;
+}
+
+.brutal-border:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px 0px rgba(0, 255, 65, 0.4);
+  border-color: #e0e0e0;
+}
+
+.scanline {
+  width: 100%;
+  height: 2px;
+  background: rgba(0, 255, 65, 0.1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  animation: scan 6s linear infinite;
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100px); }
+  100% { transform: translateY(100vh); }
+}
+
+::selection {
+  background: var(--color-primary);
+  color: #fff;
 }
