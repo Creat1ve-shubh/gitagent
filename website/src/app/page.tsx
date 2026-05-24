@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { motion, useAnimation } from "framer-motion";
-import { ArrowRight, ShieldAlert, Cpu, GitMerge, FileCode2, LineChart, FileTerminal, ArrowUpRight, TerminalSquare } from "lucide-react";
+import React from "react";
+import { motion } from "framer-motion";
+import { ArrowRight, ShieldCheck, Cpu, GitMerge, Code2, TrendingUp, Sparkles, User, Box } from "lucide-react";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -12,52 +12,108 @@ function cn(...inputs: (string | undefined | null | false)[]) {
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-[90vh] flex flex-col justify-center px-4 md:px-16 overflow-hidden border-b-2 border-gray-800">
-      <div className="absolute top-10 left-10 text-xs font-mono text-gray-600 uppercase tracking-widest hidden md:block">
-        SYS.INIT // CORE.LOAD // V.0.2.0-GO
-      </div>
-      <div className="absolute top-10 right-10 text-xs font-mono text-primary flex items-center gap-2">
-        <div className="w-2 h-2 bg-primary animate-pulse"></div> SYSTEM ONLINE
-      </div>
+    <section className="relative min-h-[90vh] flex flex-col justify-center px-6 md:px-16 overflow-hidden">
+      <div className="absolute top-1/4 -right-20 w-96 h-96 bg-secondary rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob"></div>
+      <div className="absolute top-1/3 -left-20 w-72 h-72 bg-[#e8e4d9] rounded-full mix-blend-multiply filter blur-3xl opacity-70 animate-blob animation-delay-2000"></div>
 
       <motion.div
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.6, ease: "easeOut" }}
-        className="z-10 max-w-5xl"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1, ease: "easeOut" }}
+        className="z-10 max-w-5xl mx-auto text-center mt-20"
       >
-        <div className="bg-primary text-black text-sm font-bold uppercase px-3 py-1 inline-block mb-6 tracking-wider">
-          CRITICAL ARCHITECTURE UPDATE
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white border border-gray-200 shadow-sm mb-8">
+          <Sparkles className="w-4 h-4 text-accent" />
+          <span className="text-sm font-medium tracking-wide text-gray-600 uppercase">Submission to Lyzr</span>
         </div>
-        <h1 className="text-6xl md:text-8xl font-black text-white mb-6 leading-[0.9]">
-          THE AGENT RUNTIME,<br />REIMAGINED IN <span className="text-primary border-b-4 border-primary pb-2">GO</span>.
+        
+        <h1 className="text-6xl md:text-8xl font-black text-primary mb-6 leading-[1.1] tracking-tight">
+          The Agent Runtime,<br />
+          <span className="font-cursive text-7xl md:text-9xl text-accent font-normal italic pr-4">Reimagined</span> in Go.
         </h1>
+        
         <motion.p 
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 0.3, duration: 0.8 }}
-          className="text-xl md:text-2xl text-gray-400 mb-10 max-w-2xl border-l-4 border-accent pl-6 py-2 bg-gradient-to-r from-accent/10 to-transparent"
+          transition={{ delay: 0.4, duration: 1 }}
+          className="text-xl md:text-2xl text-gray-500 mb-12 max-w-3xl mx-auto font-light leading-relaxed"
         >
-          Conflict-free MVCC Ledger. Zero-latency security pipeline. Sub-50ms cold starts.
+          A masterclass in modern systems engineering. Featuring a conflict-free MVCC Ledger, zero-latency security pipeline, and sub-50ms cold starts.
         </motion.p>
         
         <motion.div 
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.6, duration: 0.5 }}
-          className="flex flex-col sm:flex-row items-start gap-6 mt-12"
+          transition={{ delay: 0.7, duration: 0.8 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-6"
         >
-          <a href="https://github.com/Creat1ve-shubh/gitagent" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-8 py-4 bg-white text-black font-bold uppercase tracking-wider hover:bg-gray-200 transition-colors brutal-border">
-            View Source Code <ArrowUpRight className="w-5 h-5" />
+          <a href="#architecture" className="flex items-center gap-2 px-8 py-4 bg-primary text-white rounded-full font-medium hover:bg-gray-800 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+            Explore Architecture <ArrowRight className="w-5 h-5" />
           </a>
-          <a href="#engineering" className="flex items-center gap-2 px-8 py-4 bg-black border-2 border-gray-600 text-white font-bold uppercase tracking-wider hover:border-white transition-colors brutal-border">
-            Engineering Submission <ArrowRight className="w-5 h-5" />
+          <a href="https://github.com/Creat1ve-shubh/gitagent" target="_blank" rel="noreferrer" className="flex items-center gap-2 px-8 py-4 bg-white text-primary rounded-full font-medium border border-gray-200 hover:border-gray-400 transition-all shadow-sm">
+            View Source Code
           </a>
         </motion.div>
       </motion.div>
-      
-      <div className="absolute bottom-0 right-10 opacity-10 pointer-events-none">
-        <Cpu size={400} strokeWidth={0.5} />
+    </section>
+  );
+};
+
+const ArchitectureDiagram = () => {
+  return (
+    <section id="architecture" className="py-32 px-6 md:px-16 bg-white relative">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-24">
+          <span className="font-cursive text-3xl text-accent mb-4 block">01. Flow & Safety</span>
+          <h2 className="text-4xl md:text-6xl font-bold text-primary">Multi-Threaded <br/> Architecture</h2>
+        </div>
+
+        <div className="relative glass-panel p-8 md:p-16">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+            
+            {/* Step 1 */}
+            <motion.div 
+              whileHover={{ y: -5 }} 
+              className="flex-1 w-full bg-[#fdfbf7] border border-gray-100 rounded-3xl p-8 shadow-sm flex flex-col items-center text-center"
+            >
+              <div className="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center mb-6 border border-gray-100">
+                <User className="w-8 h-8 text-primary" />
+              </div>
+              <h3 className="text-2xl font-bold text-primary mb-3">User Input</h3>
+              <p className="text-gray-500 text-sm leading-relaxed">Direct interaction via IDE or CLI triggering the agent runtime.</p>
+            </motion.div>
+            
+            <ArrowRight className="text-gray-300 w-10 h-10 hidden md:block" />
+            
+            {/* Step 2 */}
+            <motion.div 
+              whileHover={{ y: -5 }} 
+              className="flex-1 w-full bg-[#fdfbf7] border border-gray-100 rounded-3xl p-8 shadow-sm flex flex-col items-center text-center relative"
+            >
+              <div className="absolute top-4 right-4 w-3 h-3 bg-red-400 rounded-full animate-pulse"></div>
+              <div className="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center mb-6 border border-gray-100">
+                <ShieldCheck className="w-8 h-8 text-primary" />
+              </div>
+              <h3 className="text-2xl font-bold text-primary mb-3">Guard Pipeline</h3>
+              <p className="text-gray-500 text-sm leading-relaxed">Stateless circuit breaker verifying strict policy constraints instantly.</p>
+            </motion.div>
+            
+            <ArrowRight className="text-gray-300 w-10 h-10 hidden md:block" />
+            
+            {/* Step 3 */}
+            <motion.div 
+              whileHover={{ y: -5 }} 
+              className="flex-1 w-full bg-[#fdfbf7] border border-gray-100 rounded-3xl p-8 shadow-sm flex flex-col items-center text-center"
+            >
+              <div className="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center mb-6 border border-gray-100">
+                <GitMerge className="w-8 h-8 text-primary" />
+              </div>
+              <h3 className="text-2xl font-bold text-primary mb-3">MVCC Ledger</h3>
+              <p className="text-gray-500 text-sm leading-relaxed">Safe concurrent writes allowing multiple agents without race conditions.</p>
+            </motion.div>
+
+          </div>
+        </div>
       </div>
     </section>
   );
@@ -65,114 +121,54 @@ const HeroSection = () => {
 
 const PerformanceShowdown = () => {
   return (
-    <section id="engineering" className="py-24 px-4 md:px-16 bg-background relative border-b-2 border-gray-800">
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16 items-center">
+    <section className="py-32 px-6 md:px-16 bg-secondary relative">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-20 items-center">
+        
         <div className="lg:w-1/2">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white uppercase"><span className="text-accent">01.</span> Performance Showdown</h2>
-          <p className="text-gray-400 text-lg mb-8 leading-relaxed">
-            The V8 engine boot times were bottlenecking agent workflows. In a CI/CD pipeline, starting up Node.js for every agent task was unacceptable. 
-            We replaced it with a single, statically compiled Go binary. The result? Near-instantaneous execution.
+          <span className="font-cursive text-3xl text-accent mb-4 block">02. Engineering Feat</span>
+          <h2 className="text-4xl md:text-6xl font-bold text-primary mb-8 leading-tight">The Performance Showdown</h2>
+          <p className="text-gray-600 text-lg mb-8 leading-relaxed font-light">
+            V8 engine boot times were bottlenecking agent workflows. In a CI/CD pipeline, starting up Node.js for every agent task was simply unacceptable. 
+            We replaced it with a single, statically compiled Go binary. The result is pure, unadulterated speed.
           </p>
-          <div className="grid grid-cols-2 gap-6">
-            <div className="border-l-2 border-gray-700 pl-4">
-              <div className="text-sm text-gray-500 uppercase tracking-widest mb-1">Previous (Node.js)</div>
-              <div className="text-3xl text-gray-300 font-mono">&gt;800ms</div>
+          <div className="grid grid-cols-2 gap-12 mt-12">
+            <div>
+              <div className="text-xs font-bold text-gray-500 uppercase tracking-widest mb-2">Previous (Node.js)</div>
+              <div className="text-5xl font-black text-gray-400 font-serif opacity-50">&gt;800<span className="text-2xl">ms</span></div>
             </div>
-            <div className="border-l-2 border-accent pl-4">
-              <div className="text-sm text-accent uppercase tracking-widest mb-1">Current (Go)</div>
-              <div className="text-3xl text-white font-mono">&lt;50ms</div>
+            <div>
+              <div className="text-xs font-bold text-primary uppercase tracking-widest mb-2">Current (Go)</div>
+              <div className="text-5xl font-black text-primary font-serif">&lt;50<span className="text-2xl">ms</span></div>
             </div>
           </div>
         </div>
         
-        <div className="lg:w-1/2 w-full flex items-end justify-center gap-8 h-[400px] p-8 brutal-border bg-[#0a0a0a] relative">
-          <div className="absolute top-4 left-4 text-xs text-gray-600 font-mono">BENCHMARK_COLD_START</div>
-          <div className="flex flex-col items-center gap-4 w-1/3">
+        <div className="lg:w-1/2 w-full glass-panel p-10 h-[450px] flex items-end justify-center gap-12 relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(#e5e5e5_1px,transparent_1px)] bg-[size:20px_20px] opacity-50"></div>
+          
+          <div className="flex flex-col items-center gap-4 w-1/3 relative z-10">
             <motion.div 
               initial={{ height: 0 }}
               whileInView={{ height: "100%" }}
               transition={{ duration: 1.5, ease: "easeOut" }}
-              className="w-full max-w-[120px] bg-gray-800 border-2 border-gray-600 relative"
+              className="w-full max-w-[140px] bg-gray-200 rounded-t-xl relative shadow-inner"
             >
-              <div className="absolute -top-10 w-full text-center text-gray-400 font-mono font-bold">850ms</div>
+              <div className="absolute -top-12 w-full text-center text-gray-500 font-medium text-lg">850ms</div>
             </motion.div>
           </div>
           
-          <div className="flex flex-col items-center gap-4 w-1/3">
+          <div className="flex flex-col items-center gap-4 w-1/3 relative z-10">
             <motion.div 
               initial={{ height: 0 }}
-              whileInView={{ height: "10%" }}
-              transition={{ duration: 0.2, ease: "easeOut", delay: 0.5 }}
-              className="w-full max-w-[120px] bg-accent border-2 border-white relative shadow-[0_0_30px_rgba(0,255,65,0.4)]"
+              whileInView={{ height: "15%" }}
+              transition={{ duration: 0.5, ease: "easeOut", delay: 0.5 }}
+              className="w-full max-w-[140px] bg-primary rounded-t-xl relative shadow-xl"
             >
-              <div className="absolute -top-10 w-full text-center text-white font-mono font-bold text-xl">42ms</div>
+              <div className="absolute -top-12 w-full text-center text-primary font-bold text-xl">42ms</div>
             </motion.div>
           </div>
         </div>
-      </div>
-    </section>
-  );
-};
-
-const ArchitectureDiagram = () => {
-  return (
-    <section className="py-24 px-4 md:px-16 bg-[#030303] relative border-b-2 border-gray-800">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white uppercase"><span className="text-primary">02.</span> Multi-Threaded Architecture</h2>
-          <p className="text-gray-400 text-lg max-w-2xl">
-            We abandoned the fragile async event loop. The new pipeline in Go provides zero-latency security checks and safe concurrent file modifications.
-          </p>
-        </div>
-
-        <div className="p-8 brutal-border bg-black relative overflow-hidden">
-          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:20px_20px]"></div>
-          
-          <div className="flex flex-col md:flex-row items-stretch justify-between gap-8 relative z-10 min-h-[300px]">
-            
-            {/* Step 1 */}
-            <motion.div 
-              whileHover={{ scale: 1.02 }} 
-              className="flex-1 flex flex-col bg-[#0a0a0a] border border-gray-700 p-6 relative group"
-            >
-              <div className="absolute top-0 right-0 bg-gray-700 text-black text-xs font-bold px-2 py-1">STAGE 01</div>
-              <FileTerminal className="w-12 h-12 text-white mb-6 group-hover:text-primary transition-colors" />
-              <h3 className="text-xl font-bold text-white mb-2 uppercase">CLI Input</h3>
-              <p className="text-gray-500 text-sm">User requests execution via prompt or IDE context.</p>
-            </motion.div>
-            
-            <div className="hidden md:flex items-center justify-center">
-              <ArrowRight className="text-gray-600 w-8 h-8" />
-            </div>
-            
-            {/* Step 2 */}
-            <motion.div 
-              whileHover={{ scale: 1.02 }} 
-              className="flex-1 flex flex-col bg-[#0a0a0a] border border-red-900 p-6 relative group shadow-[0_0_20px_rgba(255,42,42,0.1)]"
-            >
-              <div className="absolute top-0 right-0 bg-primary text-black text-xs font-bold px-2 py-1">STAGE 02</div>
-              <ShieldAlert className="w-12 h-12 text-primary mb-6" />
-              <h3 className="text-xl font-bold text-white mb-2 uppercase">Guard Pipeline</h3>
-              <p className="text-gray-500 text-sm">Stateless circuit breaker. Intercepts all tool calls instantly to block unauthorized access.</p>
-            </motion.div>
-            
-            <div className="hidden md:flex items-center justify-center">
-              <ArrowRight className="text-gray-600 w-8 h-8" />
-            </div>
-            
-            {/* Step 3 */}
-            <motion.div 
-              whileHover={{ scale: 1.02 }} 
-              className="flex-1 flex flex-col bg-[#0a0a0a] border border-accent/40 p-6 relative group shadow-[0_0_20px_rgba(0,255,65,0.1)]"
-            >
-              <div className="absolute top-0 right-0 bg-accent text-black text-xs font-bold px-2 py-1">STAGE 03</div>
-              <GitMerge className="w-12 h-12 text-accent mb-6" />
-              <h3 className="text-xl font-bold text-white mb-2 uppercase">MVCC Ledger</h3>
-              <p className="text-gray-500 text-sm">Conflict-free file management. Multiple agents can write concurrently without race conditions.</p>
-            </motion.div>
-
-          </div>
-        </div>
+        
       </div>
     </section>
   );
@@ -180,124 +176,91 @@ const ArchitectureDiagram = () => {
 
 const ToolingSection = () => {
   return (
-    <section className="py-24 px-4 md:px-16 bg-background relative border-b-2 border-gray-800">
-      <div className="max-w-7xl mx-auto">
-        <div className="mb-16">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white uppercase"><span className="text-white">03.</span> Next-Gen Tooling</h2>
-          <p className="text-gray-400 text-lg max-w-2xl">Semantic Diff and Benchmarking suites built directly into the core runtime.</p>
+    <section className="py-32 px-6 md:px-16 bg-background relative">
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-24">
+          <span className="font-cursive text-3xl text-accent mb-4 block">03. Developer Experience</span>
+          <h2 className="text-4xl md:text-6xl font-bold text-primary">Next-Gen Tooling</h2>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           {/* Semantic Diff */}
-          <div className="p-8 bg-[#0a0a0a] border border-gray-800 brutal-border group hover:border-gray-500">
-            <div className="flex items-center gap-4 mb-8 pb-4 border-b border-gray-800">
-              <div className="bg-white text-black p-3"><FileCode2 className="w-6 h-6" /></div>
-              <h3 className="text-2xl font-bold uppercase tracking-wide">Semantic Diff</h3>
+          <motion.div whileHover={{ y: -5 }} className="glass-panel p-10 group">
+            <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-8 border border-gray-100 group-hover:scale-110 transition-transform">
+              <Code2 className="w-6 h-6 text-primary" />
             </div>
-            <p className="text-gray-400 mb-8 font-mono text-sm">git diff is noisy. gitclaw diff parses the AST for human-readable summaries.</p>
-            <div className="bg-black p-6 border-l-4 border-accent font-mono text-sm leading-relaxed relative">
-              <div className="absolute top-2 right-2 flex gap-2">
-                <div className="w-3 h-3 rounded-full bg-red-500"></div>
-                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-                <div className="w-3 h-3 rounded-full bg-green-500"></div>
-              </div>
-              <div className="text-gray-500 mb-4 mt-2">$ gitclaw diff --semantic</div>
-              <div className="text-accent font-bold mb-4">&gt; ANALYZING AST...</div>
-              <ul className="text-gray-300 space-y-3 pl-4 border-l-2 border-gray-800">
-                <li className="before:content-['-'] before:mr-2 before:text-accent">Refactored <span className="text-white bg-gray-800 px-1">parse</span> function to ES6 arrow.</li>
-                <li className="before:content-['-'] before:mr-2 before:text-accent">Upgraded variable <span className="text-white bg-gray-800 px-1">x</span> to const for immutability.</li>
-                <li className="before:content-['-'] before:mr-2 before:text-accent">Logic remains completely identical.</li>
+            <h3 className="text-3xl font-bold text-primary mb-4">Semantic Diff</h3>
+            <p className="text-gray-500 mb-8 font-light leading-relaxed">
+              Standard git diffs are noisy. Gitclaw diff parses the Abstract Syntax Tree to provide clean, human-readable summaries of code mutations.
+            </p>
+            <div className="bg-[#fcfaf7] p-6 rounded-2xl border border-gray-200 font-mono text-sm shadow-inner relative overflow-hidden">
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-accent"></div>
+              <div className="text-gray-400 mb-4">$ gitclaw diff --semantic</div>
+              <ul className="text-gray-700 space-y-3">
+                <li className="flex gap-3"><span className="text-accent">→</span> Refactored parse function to ES6 arrow.</li>
+                <li className="flex gap-3"><span className="text-accent">→</span> Upgraded variable x to const.</li>
+                <li className="flex gap-3"><span className="text-accent">→</span> Logic remains completely identical.</li>
               </ul>
             </div>
-          </div>
+          </motion.div>
 
           {/* Benchmark */}
-          <div className="p-8 bg-[#0a0a0a] border border-gray-800 brutal-border group hover:border-gray-500">
-            <div className="flex items-center gap-4 mb-8 pb-4 border-b border-gray-800">
-              <div className="bg-white text-black p-3"><LineChart className="w-6 h-6" /></div>
-              <h3 className="text-2xl font-bold uppercase tracking-wide">Benchmarking</h3>
+          <motion.div whileHover={{ y: -5 }} className="glass-panel p-10 group">
+            <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center mb-8 border border-gray-100 group-hover:scale-110 transition-transform">
+              <TrendingUp className="w-6 h-6 text-primary" />
             </div>
-            <p className="text-gray-400 mb-8 font-mono text-sm">Evaluate agent performance between LLMs natively.</p>
+            <h3 className="text-3xl font-bold text-primary mb-4">Benchmarking</h3>
+            <p className="text-gray-500 mb-8 font-light leading-relaxed">
+              Evaluate agent performance across different LLMs natively. Test execution time, token usage, and accuracy entirely within the CLI.
+            </p>
             
-            <div className="overflow-x-auto border border-gray-800">
-              <table className="w-full text-sm text-left text-gray-300 font-mono">
-                <thead className="text-xs uppercase bg-black text-gray-400">
+            <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white">
+              <table className="w-full text-sm text-left">
+                <thead className="bg-secondary text-gray-600 font-medium">
                   <tr>
-                    <th className="px-6 py-4 border-b border-r border-gray-800">Metric</th>
-                    <th className="px-6 py-4 border-b border-r border-gray-800">V1 (GPT-4o)</th>
-                    <th className="px-6 py-4 border-b border-gray-800 text-white bg-white/5">V2 (Claude-3.5)</th>
+                    <th className="px-6 py-4 border-b border-r border-gray-100">Metric</th>
+                    <th className="px-6 py-4 border-b border-gray-100">Agent V1</th>
+                    <th className="px-6 py-4 border-b bg-[#fdfbf7] text-primary font-bold">Agent V2</th>
                   </tr>
                 </thead>
-                <tbody className="bg-transparent">
-                  <tr className="border-b border-gray-800">
-                    <td className="px-6 py-4 border-r border-gray-800 font-bold text-white">Tokens</td>
-                    <td className="px-6 py-4 border-r border-gray-800">12,450</td>
-                    <td className="px-6 py-4 text-accent bg-white/5">8,100 (-34%)</td>
-                  </tr>
-                  <tr className="border-b border-gray-800">
-                    <td className="px-6 py-4 border-r border-gray-800 font-bold text-white">Time</td>
-                    <td className="px-6 py-4 border-r border-gray-800">45s</td>
-                    <td className="px-6 py-4 text-accent bg-white/5">18s (-60%)</td>
+                <tbody className="text-gray-600">
+                  <tr className="border-b border-gray-100">
+                    <td className="px-6 py-4 border-r border-gray-100">Tokens</td>
+                    <td className="px-6 py-4 border-r border-gray-100">12,450</td>
+                    <td className="px-6 py-4 font-semibold text-primary bg-[#fdfbf7]">8,100 (-34%)</td>
                   </tr>
                   <tr>
-                    <td className="px-6 py-4 border-r border-gray-800 font-bold text-white">Pass Rate</td>
-                    <td className="px-6 py-4 border-r border-gray-800">85%</td>
-                    <td className="px-6 py-4 text-accent bg-white/5">100% (+15%)</td>
+                    <td className="px-6 py-4 border-r border-gray-100">Pass Rate</td>
+                    <td className="px-6 py-4 border-r border-gray-100">85%</td>
+                    <td className="px-6 py-4 font-semibold text-primary bg-[#fdfbf7]">100% (+15%)</td>
                   </tr>
                 </tbody>
               </table>
             </div>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
   );
 };
 
-const TimelineSection = () => {
-  const events = [
-    { phase: "PHASE 01: FOUNDATION", desc: "Initial release v0.1.0. Building the Node.js scaffold, adding the local repo sandbox, and integrating gitmachine." },
-    { phase: "PHASE 02: INTERFACE", desc: "Introduction of the OpenAI Realtime voice adapter, IDE-style Monaco editor, and mobile-responsive UI." },
-    { phase: "PHASE 03: THE BRAIN", desc: "Rolling out the plugin system, chat branching, background memory saving, and skill learning." },
-    { phase: "PHASE 04: OBSERVABILITY", desc: "Adding OpenTelemetry instrumentation and the unified Logs tab for debugging." },
-    { phase: "PHASE 05: THE OVERHAUL", desc: "Our Engineering Submission: Migrating from TS to Go, introducing the MVCC ledger, Stateless Circuit Breaker, semantic diff, and benchmarking.", isFinal: true },
-  ];
-
+const CandidateSection = () => {
   return (
-    <section className="py-24 px-4 md:px-16 bg-[#030303] relative border-b-2 border-gray-800 overflow-hidden">
-      <div className="absolute top-0 right-0 w-1/3 h-full bg-gradient-to-l from-primary/5 to-transparent pointer-events-none"></div>
-      
-      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-16">
-        <div className="lg:w-1/3">
-          <h2 className="text-4xl md:text-6xl font-bold mb-6 text-white uppercase leading-[0.9]"><span className="text-gray-600 block text-2xl mb-2">04.</span> Evolution<br/>Log</h2>
-          <p className="text-gray-400 text-lg">A full commit scan timeline demonstrating our mastery of the repository.</p>
+    <section className="py-32 px-6 md:px-16 bg-white border-t border-gray-100 text-center relative overflow-hidden">
+      <div className="max-w-4xl mx-auto relative z-10">
+        <div className="w-24 h-24 mx-auto bg-primary rounded-full flex items-center justify-center mb-8 shadow-2xl">
+          <Box className="w-10 h-10 text-white" />
         </div>
-
-        <div className="lg:w-2/3 relative border-l-4 border-gray-800 pl-8 md:pl-12">
-          {events.map((evt, i) => (
-            <motion.div 
-              key={i}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ delay: i * 0.15 }}
-              className="mb-16 relative"
-            >
-              <div className={cn(
-                "absolute -left-[42px] md:-left-[58px] top-1 w-6 h-6 border-4 border-[#030303]",
-                evt.isFinal ? "bg-primary rounded-none shadow-[0_0_15px_rgba(255,42,42,0.6)]" : "bg-gray-600 rounded-none"
-              )}></div>
-              <h3 className={cn("text-2xl font-bold mb-3 uppercase tracking-wide", evt.isFinal ? "text-primary" : "text-white")}>{evt.phase}</h3>
-              <p className="text-gray-400 font-mono text-sm max-w-xl leading-relaxed">{evt.desc}</p>
-              
-              {evt.isFinal && (
-                <div className="mt-6 inline-flex items-center gap-2 bg-primary text-black px-4 py-2 font-bold uppercase text-sm">
-                  <TerminalSquare className="w-4 h-4" /> Final Submission Complete
-                </div>
-              )}
-            </motion.div>
-          ))}
-        </div>
+        <h2 className="text-5xl font-black text-primary mb-6">Built by Shubh Shrivastava</h2>
+        <p className="font-cursive text-3xl text-accent mb-12">for Lyzr</p>
+        
+        <p className="text-xl text-gray-500 font-light max-w-2xl mx-auto leading-relaxed mb-12">
+          This entire architecture migration, the new features, and this presentation website represent my final engineering submission to join the Lyzr team. 
+        </p>
+        
+        <a href="https://github.com/Creat1ve-shubh/gitagent" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 px-10 py-5 bg-primary text-white rounded-full font-medium hover:bg-gray-800 transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1 text-lg">
+          Review My Code
+        </a>
       </div>
     </section>
   );
@@ -305,31 +268,28 @@ const TimelineSection = () => {
 
 export default function Home() {
   return (
-    <main className="bg-background text-white min-h-screen font-sans selection:bg-primary selection:text-black">
-      <div className="noise-overlay"></div>
-      <div className="scanline"></div>
-      
-      <nav className="flex items-center justify-between p-6 border-b-2 border-gray-800 relative z-40 bg-background/80 backdrop-blur-sm">
-        <div className="text-2xl font-black uppercase tracking-widest flex items-center gap-3">
-          <div className="w-8 h-8 bg-white text-black flex items-center justify-center">G</div>
-          GITCLAW<span className="text-primary font-mono text-sm font-bold ml-2 border border-primary px-1">V2</span>
+    <main className="bg-background text-text min-h-screen font-sans selection:bg-accent selection:text-white">
+      <nav className="flex items-center justify-between p-6 md:px-16 absolute top-0 w-full z-50">
+        <div className="text-2xl font-black tracking-tighter flex items-center gap-2 text-primary">
+          <div className="w-8 h-8 bg-primary rounded-lg text-white flex items-center justify-center text-lg">G</div>
+          GITCLAW<span className="text-accent text-sm font-bold align-top mt-1">V2</span>
         </div>
-        <div className="hidden md:flex gap-8 text-sm font-bold uppercase tracking-wider text-gray-400">
-          <a href="#engineering" className="hover:text-white transition-colors">Engineering</a>
-          <a href="#" className="hover:text-white transition-colors">Architecture</a>
-          <a href="#" className="text-primary hover:text-white transition-colors">Hire Us</a>
+        <div className="hidden md:flex gap-10 text-sm font-semibold tracking-wide text-gray-500">
+          <a href="#architecture" className="elegant-border hover:text-primary transition-colors py-1">Architecture</a>
+          <a href="https://github.com/Creat1ve-shubh/gitagent" target="_blank" rel="noreferrer" className="elegant-border hover:text-primary transition-colors py-1">GitHub</a>
         </div>
       </nav>
 
       <HeroSection />
-      <PerformanceShowdown />
       <ArchitectureDiagram />
+      <PerformanceShowdown />
       <ToolingSection />
-      <TimelineSection />
+      <CandidateSection />
       
-      <footer className="py-12 px-16 bg-black border-t-2 border-primary text-center">
-        <div className="text-3xl font-black uppercase tracking-widest text-white mb-4">GITCLAW</div>
-        <p className="text-gray-600 font-mono text-xs uppercase tracking-widest">Built for the Senior Engineering Submission &copy; 2026 // END OF LINE.</p>
+      <footer className="py-12 bg-[#f9f7f1] text-center border-t border-gray-200">
+        <p className="text-gray-400 font-medium text-sm">
+          &copy; 2026 Shubh Shrivastava. Engineering Submission for Lyzr.
+        </p>
       </footer>
     </main>
   );

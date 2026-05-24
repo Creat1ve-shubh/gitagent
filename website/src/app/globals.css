@@ -1,79 +1,69 @@
 @import "tailwindcss";
 
-@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;500;600;700&family=Russo+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Outfit:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400&display=swap');
 
 @theme {
-  --color-background: #050505;
-  --color-surface: rgba(20, 20, 20, 0.8);
-  --color-primary: #ff2a2a;
-  --color-accent: #00ff41;
-  --color-blueprint: rgba(0, 255, 65, 0.05);
+  --color-background: #fdfbf7;
+  --color-surface: #ffffff;
+  --color-primary: #111111;
+  --color-secondary: #f0ede6;
+  --color-accent: #8b8070;
+  --color-text: #222222;
+  --color-text-light: #666666;
 }
 
 @custom-variant dark (&:is(.dark *));
 
 @layer base {
   :root {
-    --background: #050505;
-    --foreground: #e0e0e0;
+    --background: #fdfbf7;
+    --foreground: #222222;
   }
 }
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: 'Chakra Petch', sans-serif;
+  font-family: 'Outfit', sans-serif;
   overflow-x: hidden;
-  background-image: 
-    linear-gradient(var(--color-blueprint) 1px, transparent 1px),
-    linear-gradient(90deg, var(--color-blueprint) 1px, transparent 1px);
-  background-size: 40px 40px;
+  background-image: radial-gradient(#d5d0c4 1px, transparent 1px);
+  background-size: 30px 30px;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Russo One', sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  font-family: 'Playfair Display', serif;
 }
 
-.noise-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  z-index: 50;
-  opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+.font-cursive {
+  font-family: 'Dancing Script', cursive;
 }
 
-.brutal-border {
-  border: 2px solid #333;
-  box-shadow: 4px 4px 0px 0px rgba(255, 42, 42, 0.3);
-  transition: all 0.2s ease;
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.05);
+  border-radius: 24px;
 }
 
-.brutal-border:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 6px 6px 0px 0px rgba(0, 255, 65, 0.4);
-  border-color: #e0e0e0;
+.elegant-border {
+  position: relative;
 }
 
-.scanline {
-  width: 100%;
-  height: 2px;
-  background: rgba(0, 255, 65, 0.1);
+.elegant-border::after {
+  content: '';
   position: absolute;
-  top: 0;
+  bottom: -4px;
   left: 0;
-  z-index: 10;
-  animation: scan 6s linear infinite;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-primary);
+  transition: width 0.3s ease;
 }
 
-@keyframes scan {
-  0% { transform: translateY(-100px); }
-  100% { transform: translateY(100vh); }
+.elegant-border:hover::after {
+  width: 100%;
 }
 
 ::selection {
