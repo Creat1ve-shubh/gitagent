@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, ShieldCheck, Cpu, GitMerge, Code2, TrendingUp, Sparkles, User, Box } from "lucide-react";
 import clsx from "clsx";
 import { twMerge } from "tailwind-merge";
+import Lenis from "lenis";
 
 function cn(...inputs: (string | undefined | null | false)[]) {
   return twMerge(clsx(inputs));
@@ -146,23 +147,23 @@ const PerformanceShowdown = () => {
         <div className="lg:w-1/2 w-full glass-panel p-10 h-[450px] flex items-end justify-center gap-12 relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(#e5e5e5_1px,transparent_1px)] bg-[size:20px_20px] opacity-50"></div>
           
-          <div className="flex flex-col items-center gap-4 w-1/3 relative z-10">
+          <div className="flex flex-col items-center justify-end gap-4 w-1/3 relative z-10 h-[300px]">
             <motion.div 
               initial={{ height: 0 }}
               whileInView={{ height: "100%" }}
               transition={{ duration: 1.5, ease: "easeOut" }}
-              className="w-full max-w-[140px] bg-gray-200 rounded-t-xl relative shadow-inner"
+              className="w-full max-w-[140px] bg-gray-200 rounded-t-xl relative shadow-inner origin-bottom"
             >
               <div className="absolute -top-12 w-full text-center text-gray-500 font-medium text-lg">850ms</div>
             </motion.div>
           </div>
           
-          <div className="flex flex-col items-center gap-4 w-1/3 relative z-10">
+          <div className="flex flex-col items-center justify-end gap-4 w-1/3 relative z-10 h-[300px]">
             <motion.div 
               initial={{ height: 0 }}
               whileInView={{ height: "15%" }}
               transition={{ duration: 0.5, ease: "easeOut", delay: 0.5 }}
-              className="w-full max-w-[140px] bg-primary rounded-t-xl relative shadow-xl"
+              className="w-full max-w-[140px] bg-primary rounded-t-xl relative shadow-xl origin-bottom"
             >
               <div className="absolute -top-12 w-full text-center text-primary font-bold text-xl">42ms</div>
             </motion.div>
@@ -267,6 +268,17 @@ const CandidateSection = () => {
 };
 
 export default function Home() {
+  React.useEffect(() => {
+    const lenis = new Lenis({
+      autoRaf: true,
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+    });
+    return () => {
+      lenis.destroy();
+    }
+  }, []);
+
   return (
     <main className="bg-background text-text min-h-screen font-sans selection:bg-accent selection:text-white">
       <nav className="flex items-center justify-between p-6 md:px-16 absolute top-0 w-full z-50">
