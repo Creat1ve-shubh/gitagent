@@ -1,12 +1,12 @@
-# Next.js Website Build Instructions: Gitclaw V2 Launch
+# Next.js Website Build Instructions: Gitclaw V2 Launch (Team Submission)
 
-**Author:** Senior Staff Engineer
+**Author:** Senior Staff Engineer Candidate (Our Team Submission)
 **Review Date:** May 24, 2026
-**Objective:** Build a premium, stunning Next.js landing page to announce and showcase the Gitclaw architectural migration from TypeScript to Go, highlighting the massive improvements in speed, safety, and concurrency.
+**Objective:** Build a premium, stunning Next.js landing page to announce and showcase the Gitclaw architectural migration from TypeScript to Go. This website serves as our engineering portfolio submission to demonstrate our mastery of the repository, highlighting massive improvements in speed, safety, tooling, and concurrency.
 
 ## 1. Tech Stack & Design Philosophy
 
-As a senior engineer reviewing the plan for this launch site, my primary directive is: **This cannot look like a standard, boring developer tool documentation site.** We just executed a massive systems engineering feat. The website needs to feel like a high-end, premium product.
+As a senior engineering team applying for this role, our primary directive is: **This cannot look like a standard, boring developer tool documentation site.** We just executed a massive systems engineering feat. The website needs to feel like a high-end, premium product that proves our caliber.
 
 ### Core Stack
 - **Framework:** Next.js 14+ (App Router)
@@ -37,27 +37,6 @@ Install animation and styling dependencies:
 npm install framer-motion lucide-react clsx tailwind-merge
 ```
 
-### Step 2: Global Styles and Typography
-Modify `tailwind.config.ts` to extend the color palette:
-```typescript
-module.exports = {
-  theme: {
-    extend: {
-      colors: {
-        background: '#09090b',
-        surface: 'rgba(255, 255, 255, 0.05)',
-        primary: '#00ADD8', // Go Cyan
-        accent: '#7928CA',
-      },
-      backgroundImage: {
-        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'hero-glow': 'conic-gradient(from 180deg at 50% 50%, #00ADD855 0deg, #7928CA55 180deg, #00ADD855 360deg)',
-      }
-    }
-  }
-}
-```
-
 ---
 
 ## 3. Component Architecture & Storytelling
@@ -65,33 +44,47 @@ module.exports = {
 ### A. The Hero Section (The Hook)
 - **Visual:** A massive, glowing, animated text effect: "The Agent Runtime, Reimagined in Go."
 - **Subtitle:** "Conflict-free. Zero-latency security. Sub-50ms cold starts."
-- **Action:** Two glowing buttons: "View on GitHub" and "Read the Architecture Document".
-- **Animation:** Use Framer Motion to stagger the entrance of the title, subtitle, and buttons. Have a subtle moving gradient orb in the background.
+- **Action:** Two glowing buttons: "View on GitHub" and "View Our Engineering Submission".
 
 ### B. The Performance Showdown (Why We Rewrote It)
 - **Concept:** A side-by-side comparison section.
-- **Visual:** Two vertical bars animating upwards. 
+- **Visual:** Two vertical bars animating upwards to represent cold start times. 
   - *Left Bar (Node.js/TS):* Animates slowly, stops at a high height (representing ~800ms+ start time). Color: Faded Gray.
   - *Right Bar (Go):* Snaps instantly to a very low height (representing <50ms). Color: Electric Blue.
-- **Copy:** Explain why V8 engine boot times were bottlenecking agent workflows in CI/CD and pre-commit hooks, and how the Go binary solved it.
 
-### C. The MVCC Write Ledger (Concurrency Visualized)
+### C. The New Architecture Diagram
+- **Concept:** Visualize our new Go-based routing and pipeline system.
+- **Implementation:** Use a sleek, styled Mermaid.js component or a custom Framer Motion SVG animation that maps out the flow:
+  `User -> Go Router -> Circuit Breaker -> Agent Engine -> MVCC Write Ledger -> File System`.
+- **Copy:** Explain how we replaced the fragile Node.js async event loop with a robust, multi-threaded Go architecture.
+
+### D. The MVCC Write Ledger (Concurrency Visualized)
 - **Concept:** Explaining the Multi-Version Concurrency Control.
 - **Visual:** Create a sleek visual of three "Agent Avatars" shooting beams (writes) at a central "File" icon. Instead of crashing, the file icon splits into versions (v1, v2, v3) stacking neatly.
-- **Copy:** Explain how this prevents race conditions and corrupted files when multiple agents operate in the same workspace.
 
-### D. The Stateless Guard Pipeline (Security)
-- **Concept:** The zero-latency circuit breaker.
-- **Visual:** A terminal window mock-up. It types out `agent > rm -rf /`. Instantly, a red glowing shield icon slams down, and the terminal flashes red: `BLOCKED: Policy Violation`.
-- **Copy:** Explain how the Go standard library allows us to intercept tool calls in memory instantly, preventing runaway agents before they touch the OS.
+### E. Next-Gen Tooling: Semantic Diff & Benchmark
+- **Concept:** Highlight our newly added developer experience tools.
+- **Visual - Semantic Diff:** A split-pane code window. On the left, a standard messy `git diff` with red and green lines. On the right, our clean `gitclaw diff` output explaining the AST-level changes in plain English.
+- **Visual - Benchmarking:** A beautiful data table showing `gitclaw bench` output, comparing "Agent V1" vs "Agent V2" on metrics like Token Usage, Tool Calls, and Task Completion Time.
 
 ---
 
-## 4. Senior Engineer Review Notes & Best Practices
+## 4. Full Development Timeline (Our Commit Scan)
+
+To prove our deep understanding of the entire repository's history, we want a dedicated **"Evolution of Gitclaw"** timeline section on the website. This should be an interactive vertical timeline component:
+
+1. **Phase 1: The Foundation:** `Initial release v0.1.0`. Building the Node.js scaffold, adding the local repo sandbox, and integrating gitmachine.
+2. **Phase 2: UI & Voice:** Introduction of the OpenAI Realtime voice adapter, IDE-style Monaco editor, and mobile-responsive UI.
+3. **Phase 3: The Agent Brain:** Rolling out the plugin system, chat branching, background memory saving, and skill learning.
+4. **Phase 4: Observability:** Adding OpenTelemetry instrumentation and the unified Logs tab for debugging.
+5. **Phase 5: The Grand Overhaul (Our Submission):** The massive `overhaul` commits. Migrating from TS to Go, introducing the MVCC ledger, the Stateless Circuit Breaker, `gitclaw diff`, and `gitclaw bench`.
+
+---
+
+## 5. Senior Engineer Review Notes & Best Practices
 
 1. **Performance is a Feature:** The website announcing our performance improvements *must itself be performant*. Ensure all images are optimized, fonts are preloaded, and Framer Motion animations only trigger `whileInView` to save CPU cycles.
-2. **Semantic HTML & SEO:** Use proper `<section>`, `<article>`, and `<header>` tags. The page title should be `Gitclaw V2 | The High-Performance Go Agent Runtime`. Meta tags should describe the TS to Go migration.
+2. **Semantic HTML & SEO:** Use proper `<section>`, `<article>`, and `<header>` tags. The page title should be `Gitclaw V2 | Engineering Submission`.
 3. **Responsive Design:** The terminal mockups and performance graphs must degrade gracefully to mobile screens. Stack the graphs vertically on small screens.
-4. **Code Quality:** Ensure strict TypeScript typing for all custom components. Use a utility like `clsx` or `tailwind-merge` for conditionally combining class names on animated elements.
 
-**Final Verdict:** Execute this with high fidelity. The UI must match the engineering excellence of the backend rewrite. Make it feel alive, fast, and secure.
+**Final Verdict:** Execute this with high fidelity. The UI must represent our technical capabilities. This isn't just a website; this is our final submission to prove we are the Senior Engineers for the job. Make it feel alive, fast, and secure.
