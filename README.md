@@ -11,7 +11,7 @@
 <h1 align="center">Gitclaw</h1>
 
 <p align="center">
-  <a href="https://gitagent.vercel.app"><b>🌐 View Live Website & Architecture Demo</b></a>
+  <a href="https://website-two-delta-32.vercel.app/"><b>🌐 View Live Website & Architecture Demo</b></a>
 </p>
 
 <p align="center">
