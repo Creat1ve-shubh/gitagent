@@ -11,6 +11,10 @@
 <h1 align="center">Gitclaw</h1>
 
 <p align="center">
+  <a href="https://gitagent.vercel.app"><b>🌐 View Live Website & Architecture Demo</b></a>
+</p>
+
+<p align="center">
   <strong>A universal git-native multimodal always learning AI Agent (TinyHuman)</strong><br/>
   Your agent lives inside a git repo — identity, rules, memory, tools, and skills are all version-controlled files.
 </p>
